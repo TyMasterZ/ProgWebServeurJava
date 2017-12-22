@@ -1,5 +1,8 @@
 package serveur;
 
+import java.time.Clock;
+import java.time.ZoneId;
+
 import bibliothèque.Abonne;
 import bibliothèque.Bibliothèque;
 import bibliothèque.Document;
@@ -9,6 +12,10 @@ public class ServiceResa implements Runnable {
 	private int numDoc;
 	private int numAbo;
 	
+	public ServiceResa(int livre,int abo) {
+		this.numDoc=livre;
+		this.numAbo=abo;
+	}
 	
 	
 	public void lancer() {
