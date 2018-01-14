@@ -7,6 +7,8 @@ import java.net.Socket;
 import bibliotheque.Bibliotheque;
 import bibliotheque.Document;
 import bibliotheque.Livre;
+import exception.DejaDisponibleException;
+import exception.DocumentInconnuException;
 import services.Service;
 
 public class ServiceRetour extends Service {
@@ -25,17 +27,28 @@ public class ServiceRetour extends Service {
 		int numDoc = readNumber();
 		int abime = readNumber();
 		
-		Document document = bibliotheque.getDocument(numDoc);
-		
-		synchronized(document){
-			if (abime == 1) {
-				Bibliotheque.interdictionAbonne((Livre) document);
+		Document document;
+		try {
+			document = bibliotheque.getDocument(numDoc);
+			synchronized(document){
+				try{											
+					if (abime == 1) {
+						Bibliotheque.interdictionAbonne((Livre) document);
+					}
+					document.retour();
+					this.out.println("Le livre " + document.numero() + "a bien été retourné.");
+					Bibliotheque.envoyerMail(document);	
+				}
+				catch(DejaDisponibleException e) {
+					this.out.println(e.getMessage());
+				}
 			}
-		document.retour();
-		this.out.println("Le livre " + document.numero() + "a bien été retourné.");
-		Bibliotheque.envoyerMail(document);
-		
 		}
+		catch (DocumentInconnuException e1) {
+			this.out.println(e1.getMessage());
+		}
+		
+		
 		
 		
 		System.out.println("Service Retour terminé.");

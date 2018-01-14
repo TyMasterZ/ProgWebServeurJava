@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 
 import bibliotheque.Bibliotheque;
+import exception.DejaDisponibleException;
 
 public abstract class Service implements Runnable{
 	protected Socket socket;

@@ -2,7 +2,9 @@ package bibliotheque;
 
 import bibliotheque.Abonne;
 import bibliotheque.Document;
-import etatDocument.*;
+import exception.AbonneInconuException;
+import exception.DejaDisponibleException;
+import exception.PasLibreException;
 
 public class Livre implements Document {
 	private int numero;
@@ -21,14 +23,20 @@ public class Livre implements Document {
 		return numero;
 	} 
 	
-	public void NoTimeLeft(Livre livre) {
+	public void NoTimeLeft(Livre livre) throws DejaDisponibleException {
 		livre.retour();
 	}
 	
-	public Abonne getAbonne() {
-		return this.abonne;
+	public Abonne getAbonne()throws AbonneInconuException {
+		if (this.abonne == null) {
+			throw new AbonneInconuException();
+		}
+		else return this.abonne;
 	}
-
+	
+	public String getEtat() {
+		return this.etat;
+	}
 	@Override
 	public void reserver(Abonne ab) throws PasLibreException {
 		if (this.etat == "Disponible"){
@@ -68,9 +76,14 @@ public class Livre implements Document {
 	}
 
 	@Override
-	public void retour() {
-		this.etat="Disponible";
-		this.abonne=null;
-		System.out.println(this.etat + " "+ this.abonne);
+	public void retour() throws DejaDisponibleException {
+		if (this.etat == "Disponible") {
+			throw new DejaDisponibleException();
+		}
+		else {
+			this.etat="Disponible";
+			this.abonne=null;
+			System.out.println(this.etat + " "+ this.abonne);
+		}
 	}
 }

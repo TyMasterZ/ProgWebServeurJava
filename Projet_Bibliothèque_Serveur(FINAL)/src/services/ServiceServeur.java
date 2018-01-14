@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 
 import bibliotheque.Bibliotheque;
+import exception.ServiceInconnuException;
 
 public class ServiceServeur implements Runnable{
 	

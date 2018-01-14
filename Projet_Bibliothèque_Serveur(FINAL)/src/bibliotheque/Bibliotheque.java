@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import mail.Mail;
 import java.util.List;
 
+import exception.AbonneInconuException;
+import exception.DocumentInconnuException;
+
 public class Bibliotheque {
 	private  List<Abonne> listAbo;
 	private List<Document> listDocument;
@@ -41,15 +44,20 @@ public class Bibliotheque {
 		}
 	}
 	
-	public Document getDocument(int id){
+	public Document getDocument(int id) throws DocumentInconnuException{
 		return this.listDocument.get(id);
 	}
 	
-	public Abonne getAbo(int id){
+	public Abonne getAbo(int id) throws AbonneInconuException{
 		return this.listAbo.get(id);
 	}
 	
 	public static void interdictionAbonne(Livre l) {
-		l.getAbonne().setInterdiction();
+		try {
+			l.getAbonne().setInterdiction();
+		}
+		catch (AbonneInconuException e) {
+			e.printStackTrace();
+		}
 	}
 }

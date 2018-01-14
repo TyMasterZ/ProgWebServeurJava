@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.Socket;
 
 import bibliotheque.Bibliotheque;
+import exception.ServiceInconnuException;
 
 
 public interface IService {
