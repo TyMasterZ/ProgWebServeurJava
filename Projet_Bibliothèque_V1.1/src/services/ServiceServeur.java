@@ -30,5 +30,8 @@ public class ServiceServeur implements Runnable{
 		}
 	}
 	
+	public void createFactory(IService factory) {
+		this.serviceFactory = factory;
+	}
 	
 }

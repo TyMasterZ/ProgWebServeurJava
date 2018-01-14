@@ -26,6 +26,17 @@ public class ServiceRetour extends Service {
 		
 		synchronized(document){
 		document.retour();
+		this.out.println("Le livre " + document.numero() + "a bien été retourné.");
+		notifyAll();
+		}
+		
+		
+		System.out.println("Service Retour terminé.");
+		
+		try {
+			this.socket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

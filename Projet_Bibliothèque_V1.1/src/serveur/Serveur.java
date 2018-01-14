@@ -1,11 +1,9 @@
 package serveur;
 
 import services.*;
-import java.io.BufferedReader;
+import servicesThread.ServiceFactory;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.net.Socket;
 import bibliotheque.Bibliotheque;
 public class Serveur implements Runnable {
 	
@@ -16,12 +14,17 @@ public class Serveur implements Runnable {
 	
 	public Serveur(Bibliotheque b) throws IOException{
 		bibliotheque=b;
+		IService factory = new ServiceFactory();
 		SSEmprunter = new ServiceServeur(bibliotheque,P_EMPRUNTER);
 		System.out.println("Service serveur Emprunter initialisé.");
 		SSRetour = new ServiceServeur(bibliotheque,P_RETOUR);
 		System.out.println("Service serveur Retour initialisé.");
 		SSReserver =  new ServiceServeur(bibliotheque,P_RESERVER);
 		System.out.println("Service serveur Reserver initialisé.");
+		SSEmprunter.createFactory(factory);
+		SSReserver.createFactory(factory);
+		SSRetour.createFactory(factory);
+		
 	}
 
 
